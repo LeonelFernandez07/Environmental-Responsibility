@@ -1,25 +1,27 @@
-// --- CONFIGURACIÓN DE FIREBASE ---
+// --- CONFIGURACIÓN DE FIREBASE (Credenciales Reales) ---
 const firebaseConfig = {
-  apiKey: "AIzaSy...", // Copia el de tu pantalla
+  apiKey: "AIzaSyDQDVfd8dHO1YXZ5fcuMCACmq09k3fHqiM",
   authDomain: "environmental-responsibility.firebaseapp.com",
+  databaseURL: "https://environmental-responsibility-default-rtdb.firebaseio.com",
   projectId: "environmental-responsibility",
-  storageBucket: "environmental-responsibility.appapp.com", // o .appspot.com
-  messagingSenderId: "236669543848", // El número de tu pantalla
-  appId: "1:236669543848:web:2646eb1322f0ecc53e3699d" // El de tu pantalla
+  storageBucket: "environmental-responsibility.firebasestorage.app",
+  messagingSenderId: "236669543848",
+  appId: "1:236669543848:web:2646eb1322f0cc53e3699d"
 };
 
-// Inicializar Firebase (Versión clásica compatible con tu app)
+// Inicializar Firebase de forma compatible con la versión clásica
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 const db = firebase.firestore();
 
-// --- LÓGICA DE LA TABLA DE POSICIONES Y EL JUEGO ---
+// --- LÓGICA DE LA APLICACIÓN Y LA TABLA DE POSICIONES ---
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Aplicación cargada correctamente.");
+  console.log("Aplicación conectada correctamente a Firebase.");
   cargarLeaderboard();
 });
 
+// Función para guardar puntajes en tiempo real
 function guardarPuntaje(nombreJugador, puntajeObtenido) {
   if (!nombreJugador || nombreJugador.trim() === "") {
     nombreJugador = "Anónimo";
@@ -39,6 +41,7 @@ function guardarPuntaje(nombreJugador, puntajeObtenido) {
   });
 }
 
+// Función para cargar y actualizar la tabla en tiempo real
 function cargarLeaderboard() {
   const leaderboardContainer = document.getElementById("leaderboard-list");
   if (!leaderboardContainer) return;
@@ -66,6 +69,7 @@ function cargarLeaderboard() {
     });
 }
 
+// Seguridad básica para texto
 function escapeHtml(text) {
   const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
   return text.replace(/[&<>"']/g, function(m) { return map[m]; });
