@@ -98,7 +98,7 @@ function resetQuiz() {
   });
 }
 
-// --- LÓGICA ROBUSTA DE LA SOPA DE LETRAS (COORDENADAS EXACTAS) ---
+// --- LÓGICA DE LA SOPA DE LETRAS (COORDENADAS Y RESPONSIVA) ---
 let wsInitialized = false;
 let timerInterval = null;
 let secondsElapsed = 0;
@@ -129,10 +129,8 @@ function initWordSearch() {
   foundWordsCount = 0;
   placedWordsData = [];
 
-  // 1. Crear matriz vacía de 10x10
   gridMatrix = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(''));
 
-  // Direcciones: Horizontal, Vertical, Diagonal descendente, Diagonal ascendente
   const directions = [
     [0, 1],   // Horizontal ->
     [1, 0],   // Vertical v
@@ -140,7 +138,6 @@ function initWordSearch() {
     [-1, 1]   // Transversal /
   ];
 
-  // 2. Colocar palabras y registrar coordenadas exactas
   targetWords.forEach(word => {
     let placed = false;
     let attempts = 0;
@@ -178,7 +175,6 @@ function initWordSearch() {
     }
   });
 
-  // 3. Rellenar espacios vacíos con letras aleatorias
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   for (let r = 0; r < GRID_SIZE; r++) {
     for (let c = 0; c < GRID_SIZE; c++) {
@@ -188,7 +184,6 @@ function initWordSearch() {
     }
   }
 
-  // 4. Renderizar celdas en el DOM con atributos de coordenadas
   gridMatrix.forEach((row, rIdx) => {
     row.forEach((letter, cIdx) => {
       const cell = document.createElement("div");
@@ -376,7 +371,7 @@ function cargarLeaderboard() {
 
 function resetLeaderboardWithPassword() {
   const pass = prompt("Enter reset password:");
-  if (pass === "admin123") {
+  if (pass === "leonel12354@") {
     db.collection("leaderboard").get().then((querySnapshot) => {
       const batch = db.batch();
       querySnapshot.forEach((doc) => {
