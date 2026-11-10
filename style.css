@@ -1,336 +1,288 @@
-:root {
-  --primary-color: #2b593f;
-  --secondary-color: #40916c;
-  --background-color: #f0f4f1;
-  --card-bg: #ffffff;
-  --text-primary: #1b4332;
-  --text-muted: #52796f;
-  --accent-color: #d8f3dc;
-  --correct-color: #2d6a4f;
-  --wrong-color: #d90429;
-  --found-color: #38a3a5;
-  --gold-color: #f1c40f;
-}
-
+/* --- ESTILOS GENERALES Y LAYOUT --- */
 * {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-primary);
+  background-color: #f4f7f6;
+  color: #333;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  line-height: 1.4;
 }
 
 header {
-  background: linear-gradient(135deg, var(--primary-color), #1e3f2d);
+  background-color: #2e7d32;
   color: white;
   text-align: center;
-  padding: 1.2rem 1rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  padding: 20px;
 }
 
 header h1 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: -0.3px;
+  font-size: 2rem;
+  margin-bottom: 5px;
 }
 
 header p {
-  font-size: 0.85rem;
-  margin-top: 4px;
-  opacity: 0.85;
+  font-size: 1.1rem;
+  opacity: 0.9;
 }
 
+/* NAV - BARRA DE NAVEGACIÓN */
 nav {
   display: flex;
-  background-color: var(--card-bg);
-  padding: 6px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  gap: 6px;
+  justify-content: center;
+  background-color: #1b5e20;
+  gap: 10px;
+  padding: 10px;
 }
 
 .nav-btn {
-  flex: 1;
-  background-color: transparent;
-  color: var(--text-muted);
-  border: none;
-  padding: 12px 6px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border-radius: 8px;
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-weight: bold;
   cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: center;
+  transition: all 0.3s ease;
 }
 
-.nav-btn.active {
-  background-color: var(--accent-color);
-  color: var(--primary-color);
-  font-weight: 700;
+.nav-btn:hover, .nav-btn.active {
+  background-color: white;
+  color: #1b5e20;
 }
 
+/* CONTENEDOR PRINCIPAL Y MANEJO DE SECCIONES */
 .container {
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 14px;
   flex: 1;
+  max-width: 800px;
+  width: 90%;
+  margin: 20px auto;
 }
 
-.active-section {
-  display: block;
+main > section {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-.hidden-section {
+main > section.active-section {
+  display: block !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+main > section.hidden-section {
   display: none !important;
+  pointer-events: none !important;
 }
 
-.card, .quiz-card, .result-card {
-  background-color: var(--card-bg);
-  padding: 16px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  margin-bottom: 14px;
-  border: 1px solid rgba(0, 0, 0, 0.03);
+h2 {
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+.instructions {
+  color: #666;
+  font-style: italic;
+}
+
+/* --- SECCIÓN 1: QUIZ --- */
+.quiz-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 15px;
+  background-color: #fafafa;
 }
 
 .question {
   font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--text-primary);
   margin-bottom: 12px;
+  color: #1b5e20;
 }
 
 .option-btn {
   display: block;
   width: 100%;
-  padding: 14px;
-  margin: 8px 0;
-  background-color: #f8faf8;
-  border: 1.5px solid #e0e7e1;
-  border-radius: 10px;
   text-align: left;
-  font-size: 0.88rem;
-  color: var(--text-primary);
-  font-weight: 500;
-  transition: active 0.1s ease;
+  padding: 12px;
+  margin-bottom: 8px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  font-size: 0.95rem;
 }
 
-.option-btn:active {
-  transform: scale(0.98);
+.option-btn:hover:not(:disabled) {
+  background-color: #e8f5e9;
+  border-color: #2e7d32;
 }
 
-.option-btn.correct {
-  background-color: var(--correct-color) !important;
-  color: white !important;
-  border-color: var(--correct-color) !important;
+.option-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
 }
 
-.option-btn.wrong {
-  background-color: var(--wrong-color) !important;
-  color: white !important;
-  border-color: var(--wrong-color) !important;
-}
-
+/* PANEL DE RESULTADOS */
 .result-card {
+  margin-top: 25px;
+  padding: 20px;
+  background-color: #e8f5e9;
+  border: 2px solid #2e7d32;
+  border-radius: 8px;
   text-align: center;
-  padding: 24px 16px;
-  border-top: 4px solid var(--primary-color);
+}
+
+.result-card.hidden-section {
+  display: none !important;
+}
+
+.result-card:not(.hidden-section) {
+  display: block !important;
 }
 
 .restart-btn {
-  background-color: var(--primary-color);
+  background-color: #2e7d32;
   color: white;
   border: none;
-  padding: 12px 24px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  border-radius: 25px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
-  margin: 8px 4px 0 4px;
-  box-shadow: 0 4px 10px rgba(43, 89, 63, 0.3);
+  margin-top: 15px;
 }
 
-.secondary-btn {
-  background-color: var(--secondary-color);
+.restart-btn:hover {
+  opacity: 0.9;
 }
 
-.instructions {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.player-bar {
+/* --- SECCIÓN 2: SOPA DE LETRAS --- */
+.player-bar, .game-stats {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--accent-color);
-  padding: 8px 14px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  font-size: 0.85rem;
-  color: var(--primary-color);
+  margin: 15px 0;
+  background-color: #f0f4f1;
+  padding: 10px 15px;
+  border-radius: 6px;
 }
 
 .change-name-btn {
-  background: white;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.game-stats {
-  display: flex;
-  justify-content: space-around;
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 12px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-}
-
+/* Cuadrícula de 10x10 para soportar horizontales, verticales y diagonales */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 3px;
-  margin: 0 auto 16px auto;
-  width: 100%;
-  max-width: 360px;
-  background: var(--secondary-color);
-  padding: 4px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  grid-template-columns: repeat(10, 36px);
+  gap: 5px;
+  justify-content: center;
+  margin: 20px 0;
 }
 
 .grid-cell {
-  aspect-ratio: 1;
-  background-color: white;
+  width: 36px;
+  height: 36px;
+  background-color: #ffffff;
+  border: 2px solid #a5d6a7;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 0.85rem;
+  font-weight: bold;
+  font-size: 1.05rem;
   cursor: pointer;
-  border-radius: 4px;
   user-select: none;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.1s ease;
+}
+
+.grid-cell:hover {
+  background-color: #c8e6c9;
 }
 
 .grid-cell.selected {
-  background-color: var(--primary-color);
+  background-color: #2e7d32;
   color: white;
+  border-color: #1b5e20;
 }
 
-.grid-cell.found {
-  background-color: var(--found-color);
-  color: white;
+.grid-cell.found-cell {
+  background-color: #81c784 !important;
+  color: white !important;
+  border-color: #388e3c !important;
 }
 
-#words-to-find-container h3 {
-  text-align: center;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+#words-to-find-container {
+  margin-top: 20px;
 }
 
 #words-list {
-  list-style: none;
+  list-style-type: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 10px;
+  margin-top: 10px;
   justify-content: center;
 }
 
 #words-list li {
-  background-color: var(--accent-color);
-  color: var(--primary-color);
-  padding: 6px 12px;
+  background-color: #e0e0e0;
+  padding: 6px 14px;
   border-radius: 15px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  transition: all 0.2s ease;
+  font-weight: bold;
 }
 
-#words-list li.found-word {
-  background-color: #e2e8f0;
-  color: #a0aec0;
+#words-list li.found {
+  background-color: #81c784;
+  color: white;
   text-decoration: line-through;
 }
 
-/* Tabla de Clasificación */
+/* --- SECCIÓN 3: LEADERBOARD --- */
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
-  text-align: left;
+  margin-top: 15px;
 }
 
 .leaderboard-table th, .leaderboard-table td {
-  padding: 10px 8px;
-  border-bottom: 1px solid #edf2f7;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
 }
 
 .leaderboard-table th {
-  color: var(--text-muted);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-}
-
-.leaderboard-table tr:nth-child(1) td {
-  font-weight: 700;
-  color: #b7791f;
-  background-color: #fffaf0;
-}
-
-.leaderboard-table tr:nth-child(2) td {
-  font-weight: 600;
-  color: #4a5568;
-}
-
-.leaderboard-table tr:nth-child(3) td {
-  font-weight: 600;
-  color: #9c4221;
+  background-color: #2e7d32;
+  color: white;
 }
 
 .reset-lb-btn {
-  background-color: #d90429;
+  background-color: #d32f2f;
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 10px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  border-radius: 4px;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(217, 4, 41, 0.3);
+  margin-top: 15px;
 }
 
 footer {
   text-align: center;
-  padding: 1rem;
-  background-color: var(--primary-color);
-  color: white;
-  margin-top: auto;
-  font-size: 0.78rem;
-  opacity: 0.9;
+  padding: 15px;
+  background-color: #e0e0e0;
+  margin-top: 30px;
+  color: #666;
 }
