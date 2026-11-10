@@ -37,12 +37,18 @@ function showSection(sectionId, btnElement) {
     navButtons.forEach(btn => btn.classList.remove("active"));
     btnElement.classList.add("active");
   }
+
+  // Si abren la sopa de letras, inicializar el juego si no está creado
+  if (sectionId === 'wordsearch') {
+    initWordSearch();
+  }
 }
 
 // --- LÓGICA DE LA APLICACIÓN Y LA TABLA DE POSICIONES ---
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Aplicación conectada correctamente a Firebase.");
   cargarLeaderboard();
+  initWordSearch();
 });
 
 // Función para guardar puntajes o tiempos en tiempo real
@@ -100,30 +106,134 @@ function cargarLeaderboard() {
 }
 
 // --- LÓGICA PARA LAS RESPUESTAS DEL QUIZ ---
+let correctAnswersCount = 0;
+let answeredQuestions = 0;
+
 function selectAnswer(questionNumber, isCorrect, btnElement) {
   const card = btnElement.closest('.quiz-card');
   if (!card) return;
   
   const buttons = card.querySelectorAll('.option-btn');
-
-  // Deshabilitar todos los botones de esta pregunta para evitar múltiples clics
-  buttons.forEach(btn => {
-    btn.disabled = true;
-  });
+  buttons.forEach(btn => btn.disabled = true);
 
   if (isCorrect) {
     btnElement.style.backgroundColor = "#d4edda";
     btnElement.style.border = "2px solid #28a745";
-    console.log("Respuesta correcta");
+    correctAnswersCount++;
   } else {
     btnElement.style.backgroundColor = "#f8dad6";
     btnElement.style.border = "2px solid #dc3545";
-    console.log("Respuesta incorrecta");
+  }
+
+  answeredQuestions++;
+
+  // Si respondió las 5 preguntas, mostrar el resultado y botón de reintentar
+  if (answeredQuestions === 5) {
+    const resultCard = document.getElementById('quiz-result');
+    const scoreText = document.getElementById('final-score-text');
+    if (resultCard && scoreText) {
+      scoreText.textContent = `Your Score: ${correctAnswersCount} / 5`;
+      resultCard.classList.remove('hidden-section');
+    }
   }
 }
 
 function resetQuiz() {
-  location.reload();
+  correctAnswersCount = 0;
+  answeredQuestions = 0;
+  const resultCard = document.getElementById('quiz-result');
+  if (resultCard) resultCard.classList.add('hidden-section');
+
+  const buttons = document.querySelectorAll('.quiz-card .option-btn');
+  buttons.forEach(btn => {
+    btn.disabled = false;
+    btn.style.backgroundColor = "";
+    btn.style.border = "";
+  });
+}
+
+// --- LÓGICA DE LA SOPA DE LETRAS ---
+let wsInitialized = false;
+let timerInterval = null;
+let secondsElapsed = 0;
+let foundWords = 0;
+const totalWords = 5;
+let playerName = "Anonymous";
+
+function promptPlayerName() {
+  const name = prompt("Enter your player name:", playerName);
+  if (name && name.trim() !== "") {
+    playerName = name.trim();
+    const display = document.getElementById("player-display");
+    if (display) display.textContent = playerName;
+  }
+}
+
+function initWordSearch() {
+  const gridContainer = document.getElementById("grid-container");
+  if (!gridContainer || wsInitialized) return;
+  
+  gridContainer.innerHTML = "";
+  // Generar una cuadrícula sencilla de prueba de 8x8 con las letras de las palabras
+  const letters = [
+    ['L','I','T','T','E','R','X','P'],
+    ['W','A','S','T','E','Y','P','L'],
+    ['P','O','L','I','C','Y','Z','A'],
+    ['D','E','B','A','T','E','W','S'],
+    ['X','Y','Z','A','B','C','D','T'],
+    ['P','L','A','S','T','I','C','I'],
+    ['F','G','H','I','J','K','L','C'],
+    ['M','N','O','P','Q','R','S','T']
+  ];
+
+  letters.forEach((row, rIdx) => {
+    row.forEach((letter, cIdx) => {
+      const cell = document.createElement("div");
+      cell.className = "grid-cell";
+      cell.textContent = letter;
+      cell.dataset.row = rIdx;
+      cell.dataset.col = cIdx;
+      cell.addEventListener("click", () => handleCellClick(cell));
+      gridContainer.appendChild(cell);
+    });
+  });
+
+  wsInitialized = true;
+}
+
+function startTimer() {
+  if (timerInterval) return;
+  timerInterval = setInterval(() => {
+    secondsElapsed++;
+    const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+    const secs = String(secondsElapsed % 60).padStart(2, '0');
+    const timerElem = document.getElementById("timer");
+    if (timerElem) timerElem.textContent = `${mins}:${secs}`;
+  }, 1000);
+}
+
+function handleCellClick(cell) {
+  startTimer();
+  cell.classList.toggle("selected");
+}
+
+function resetWordSearch() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  secondsElapsed = 0;
+  foundWords = 0;
+  wsInitialized = false;
+  
+  const timerElem = document.getElementById("timer");
+  if (timerElem) timerElem.textContent = "00:00";
+  
+  const foundElem = document.getElementById("found-count");
+  if (foundElem) foundElem.textContent = "0";
+
+  const wsResult = document.getElementById("ws-result");
+  if (wsResult) wsResult.classList.add('hidden-section');
+
+  initWordSearch();
 }
 
 // Función para restablecer la tabla con contraseña
