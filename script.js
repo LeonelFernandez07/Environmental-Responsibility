@@ -98,7 +98,7 @@ function resetQuiz() {
   });
 }
 
-// --- LÓGICA ROBUSTA DE LA SOPA DE LETRAS (POR COORDENADAS) ---
+// --- LÓGICA DE LA SOPA DE LETRAS (COORDENADAS Y RESPONSIVA) ---
 let wsInitialized = false;
 let timerInterval = null;
 let secondsElapsed = 0;
@@ -108,7 +108,7 @@ let selectedCells = [];
 const targetWords = ["LITTER", "POLICY", "WASTE", "PLASTIC", "DEBATE"];
 const GRID_SIZE = 10;
 let gridMatrix = [];
-let placedWordsData = []; // Almacena las coordenadas exactas de cada palabra colocada
+let placedWordsData = [];
 
 function promptPlayerName() {
   const name = prompt("Enter your player name:", playerName);
@@ -129,10 +129,8 @@ function initWordSearch() {
   foundWordsCount = 0;
   placedWordsData = [];
 
-  // 1. Crear matriz vacía de 10x10
   gridMatrix = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(''));
 
-  // Direcciones: Horizontal, Vertical, Diagonal descendente, Diagonal ascendente
   const directions = [
     [0, 1],   // Horizontal ->
     [1, 0],   // Vertical v
@@ -140,7 +138,6 @@ function initWordSearch() {
     [-1, 1]   // Transversal /
   ];
 
-  // 2. Colocar palabras y registrar sus coordenadas exactas
   targetWords.forEach(word => {
     let placed = false;
     let attempts = 0;
@@ -178,7 +175,6 @@ function initWordSearch() {
     }
   });
 
-  // 3. Rellenar espacios vacíos con letras aleatorias
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   for (let r = 0; r < GRID_SIZE; r++) {
     for (let c = 0; c < GRID_SIZE; c++) {
@@ -188,7 +184,6 @@ function initWordSearch() {
     }
   }
 
-  // 4. Renderizar celdas en el DOM con atributos data-row y data-col
   gridMatrix.forEach((row, rIdx) => {
     row.forEach((letter, cIdx) => {
       const cell = document.createElement("div");
@@ -215,7 +210,6 @@ function startTimer() {
 
 function handleCellClick(cell) {
   startTimer();
-  // Permitir seleccionar celdas incluso si forman parte de otra palabra cruzada
   cell.classList.toggle("selected");
   
   if (cell.classList.contains("selected")) {
@@ -224,7 +218,6 @@ function handleCellClick(cell) {
     selectedCells = selectedCells.filter(c => c !== cell);
   }
 
-  // Comprobar por coordenadas exactas de manera instantánea
   checkWordByCoordinates();
 }
 
@@ -246,7 +239,6 @@ function checkWordByCoordinates() {
   }
 
   if (matchedWordObj) {
-    // Marcar celdas seleccionadas como encontradas
     selectedCells.forEach(cell => {
       cell.classList.remove("selected");
       cell.classList.add("found-cell");
@@ -254,7 +246,6 @@ function checkWordByCoordinates() {
       cell.style.color = "white";
     });
 
-    // Tachar la palabra en la lista inferior
     const wordItems = document.querySelectorAll("#words-list li");
     wordItems.forEach(li => {
       if (li.dataset.word === matchedWordObj.word || li.textContent.trim() === matchedWordObj.word) {
@@ -268,7 +259,6 @@ function checkWordByCoordinates() {
     const foundElem = document.getElementById("found-count");
     if (foundElem) foundElem.textContent = foundWordsCount;
 
-    // Si completó todas las palabras
     if (foundWordsCount === targetWords.length) {
       clearInterval(timerInterval);
       timerInterval = null;

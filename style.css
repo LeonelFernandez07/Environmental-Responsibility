@@ -38,6 +38,7 @@ nav {
   background-color: #1b5e20;
   gap: 10px;
   padding: 10px;
+  flex-wrap: wrap;
 }
 
 .nav-btn {
@@ -60,13 +61,13 @@ nav {
 .container {
   flex: 1;
   max-width: 800px;
-  width: 90%;
+  width: 95%;
   margin: 20px auto;
 }
 
 main > section {
   background: white;
-  padding: 25px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
@@ -164,7 +165,7 @@ h2 {
   opacity: 0.9;
 }
 
-/* --- SECCIÓN 2: SOPA DE LETRAS --- */
+/* --- SECCIÓN 2: SOPA DE LETRAS (ADAPTADA A MÓVILES) --- */
 .player-bar, .game-stats {
   display: flex;
   justify-content: space-between;
@@ -173,6 +174,8 @@ h2 {
   background-color: #f0f4f1;
   padding: 10px 15px;
   border-radius: 6px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .change-name-btn {
@@ -184,26 +187,27 @@ h2 {
   cursor: pointer;
 }
 
-/* Cuadrícula de 10x10 para soportar horizontales, verticales y diagonales */
+/* Cuadrícula responsiva que se adapta automáticamente a pantallas de celulares */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(10, 36px);
-  gap: 5px;
+  grid-template-columns: repeat(10, minmax(28px, 1fr));
+  gap: 3px;
   justify-content: center;
-  margin: 20px 0;
+  margin: 20px auto;
+  max-width: 100%;
 }
 
 .grid-cell {
-  width: 36px;
-  height: 36px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   background-color: #ffffff;
-  border: 2px solid #a5d6a7;
-  border-radius: 6px;
+  border: 1px solid #a5d6a7;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.1s ease;
@@ -227,22 +231,24 @@ h2 {
 
 #words-to-find-container {
   margin-top: 20px;
+  text-align: center;
 }
 
 #words-list {
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   margin-top: 10px;
   justify-content: center;
 }
 
 #words-list li {
   background-color: #e0e0e0;
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: 15px;
   font-weight: bold;
+  font-size: 0.9rem;
 }
 
 #words-list li.found {
@@ -259,9 +265,10 @@ h2 {
 }
 
 .leaderboard-table th, .leaderboard-table td {
-  padding: 12px;
+  padding: 10px;
   border-bottom: 1px solid #ddd;
   text-align: left;
+  font-size: 0.95rem;
 }
 
 .leaderboard-table th {
@@ -285,4 +292,5 @@ footer {
   background-color: #e0e0e0;
   margin-top: 30px;
   color: #666;
+  font-size: 0.9rem;
 }
