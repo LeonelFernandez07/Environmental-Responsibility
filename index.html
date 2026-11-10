@@ -2,162 +2,152 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Etiqueta estricta para evitar el zoom excesivo y adaptar la pantalla a dispositivos móviles -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Environmental Responsibility - Be the Teacher</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Environmental Responsibility - Interactive Class</title>
   
-  <!-- SDKs de Firebase para la Tabla en Tiempo Real -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase SDKs (Versión Clásica compatible) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <h1>Environmental Responsibility</h1>
     <p>Living Uruguay 5 — Interactive Class</p>
   </header>
 
-  <!-- Mobile Navigation Bar -->
+  <!-- BARRA DE NAVEGACIÓN -->
   <nav>
-    <button class="nav-btn active" onclick="showSection('quiz', this)">Interactive Quiz</button>
+    <button class="nav-btn active" onclick="showSection('quiz-section', this)">Interactive Quiz</button>
     <button class="nav-btn" onclick="showSection('wordsearch', this)">Word Search</button>
-    <button class="nav-btn" onclick="showSection('leaderboard', this)">Top 30</button>
+    <button class="nav-btn" onclick="showSection('leaderboard-section', this)">Top 30</button>
   </nav>
 
-  <main class="container">
+  <div class="container">
+    <main>
+      <!-- SECCIÓN 1: QUIZ -->
+      <section id="quiz-section" class="active-section">
+        <h2>General Questions</h2>
+        <p class="instructions">Test your knowledge about environmental responsibility.</p>
 
-    <!-- SECTION 1: QUIZ -->
-    <section id="quiz" class="active-section">
-      <h2>General Questions Quiz</h2>
-      <p class="instructions" style="margin-bottom: 15px;">Test your perspective on environmental responsibility based on the unit.</p>
-      
-      <div id="quiz-container">
-        
-        <!-- Question 1 -->
-        <div class="quiz-card" data-question="1">
-          <p class="question">1. How would you define environmental responsibility? What are its main implications?</p>
-          <button class="option-btn" onclick="selectAnswer(1, true, this)">It means our duty to protect nature, implying conscious choices and sustainable habits.</button>
-          <button class="option-btn" onclick="selectAnswer(1, false, this)">It refers strictly to paying government taxes for using public parks.</button>
-          <button class="option-btn" onclick="selectAnswer(1, false, this)">It means ignoring ecological issues until legislation forces factories to close.</button>
+        <!-- Pregunta 1 -->
+        <div class="quiz-card">
+          <p class="question">1. What is the main cause of global warming?</p>
+          <button class="option-btn" onclick="selectAnswer(1, false, this)">A) Planting trees</button>
+          <button class="option-btn" onclick="selectAnswer(1, true, this)">B) Greenhouse gas emissions</button>
+          <button class="option-btn" onclick="selectAnswer(1, false, this)">C) Using solar energy</button>
         </div>
 
-        <!-- Question 2 -->
-        <div class="quiz-card" data-question="2">
-          <p class="question">2. Think of an ordinary day. How much do you cater to the environment? What are the actions that give evidence?</p>
-          <button class="option-btn" onclick="selectAnswer(2, false, this)">I never think about it because daily routines have zero impact on the planet.</button>
-          <button class="option-btn" onclick="selectAnswer(2, true, this)">I try to reduce single-use plastics, recycle waste, and save water or energy daily.</button>
-          <button class="option-btn" onclick="selectAnswer(2, false, this)">I only care about nature when I visit national parks once a year.</button>
+        <!-- Pregunta 2 -->
+        <div class="quiz-card">
+          <p class="question">2. Which material takes the longest to decompose?</p>
+          <button class="option-btn" onclick="selectAnswer(2, false, this)">A) Paper bag</button>
+          <button class="option-btn" onclick="selectAnswer(2, false, this)">B) Banana peel</button>
+          <button class="option-btn" onclick="selectAnswer(2, true, this)">C) Plastic bottle</button>
         </div>
 
-        <!-- Question 3 -->
-        <div class="quiz-card" data-question="3">
-          <p class="question">3. Go around the city/neighborhood you live in. Is it a clean city/neighborhood?</p>
-          <button class="option-btn" onclick="selectAnswer(3, false, this)">Yes, because littering never happens anywhere in urban spaces.</button>
-          <button class="option-btn" onclick="selectAnswer(3, false, this)">No, municipal services clean everything instantly without citizen help.</button>
-          <button class="option-btn" onclick="selectAnswer(3, true, this)">It varies; while some areas are well-kept, others suffer from litter and waste disposal issues.</button>
+        <!-- Pregunta 3 -->
+        <div class="quiz-card">
+          <p class="question">3. What does recycling help reduce?</p>
+          <button class="option-btn" onclick="selectAnswer(3, true, this)">A) Landfill waste</button>
+          <button class="option-btn" onclick="selectAnswer(3, false, this)">B) Oxygen levels</button>
+          <button class="option-btn" onclick="selectAnswer(3, false, this)">C) Animal habitats</button>
         </div>
 
-        <!-- Question 4 -->
-        <div class="quiz-card" data-question="4">
-          <p class="question">4. Do you know any environmental organization in your city/neighborhood?</p>
-          <button class="option-btn" onclick="selectAnswer(4, true, this)">Yes, local groups or NGOs focused on recycling, animal protection, or cleanups.</button>
-          <button class="option-btn" onclick="selectAnswer(4, false, this)">No, environmental organizations only exist in fictional movies.</button>
-          <button class="option-btn" onclick="selectAnswer(4, false, this)">No, cities legally ban any form of ecological group activity.</button>
+        <!-- Pregunta 4 -->
+        <div class="quiz-card">
+          <p class="question">4. Which energy source is renewable?</p>
+          <button class="option-btn" onclick="selectAnswer(4, false, this)">A) Coal</button>
+          <button class="option-btn" onclick="selectAnswer(4, true, this)">B) Wind power</button>
+          <button class="option-btn" onclick="selectAnswer(4, false, this)">C) Natural gas</button>
         </div>
 
-        <!-- Question 5 -->
-        <div class="quiz-card" data-question="5">
-          <p class="question">5. Have you ever been a volunteer in an environmental organization?</p>
-          <button class="option-btn" onclick="selectAnswer(5, true, this)">I might have joined community cleanups or tree-planting activities to help out.</button>
-          <button class="option-btn" onclick="selectAnswer(5, false, this)">No, volunteering is strictly prohibited for students everywhere.</button>
-          <button class="option-btn" onclick="selectAnswer(5, false, this)">Only professional scientists are allowed to participate in environmental work.</button>
+        <!-- Pregunta 5 -->
+        <div class="quiz-card">
+          <p class="question">5. What is a sustainable practice for water usage?</p>
+          <button class="option-btn" onclick="selectAnswer(5, false, this)">A) Leaving the tap running</button>
+          <button class="option-btn" onclick="selectAnswer(5, true, this)">B) Fixing leaky faucets</button>
+          <button class="option-btn" onclick="selectAnswer(5, false, this)">C) Washing cars daily with a hose</button>
         </div>
 
-        <!-- Final Quiz Result Panel -->
+        <!-- Resultado Final del Quiz -->
         <div id="quiz-result" class="result-card hidden-section">
           <h3>Quiz Completed!</h3>
           <p id="final-score-text">Your Score: 0 / 5</p>
-          <button class="restart-btn" onclick="resetQuiz()">Try Again</button>
+          <button class="restart-btn" onclick="resetQuiz()">Retrying Quiz</button>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: SOPA DE LETRAS -->
+      <section id="wordsearch" class="hidden-section">
+        <h2>Vocabulary Word Search</h2>
+        <p class="instructions">Tap letters to find hidden words (horizontal, vertical, or diagonal). First tap starts the timer.</p>
+
+        <div class="player-bar">
+          <span id="player-display">Player: Anonymous</span>
+          <button class="change-name-btn" onclick="promptPlayerName()">Change Name</button>
         </div>
 
-      </div>
-    </section>
+        <div class="game-stats">
+          <span>⏱️ Time: <strong id="timer">00:00</strong></span>
+          <span>🎯 Found: <strong id="found-count">0</strong> / 5</span>
+        </div>
 
-    <!-- SECTION 2: WORD SEARCH -->
-    <section id="wordsearch" class="hidden-section">
-      <h2>Vocabulary Word Search</h2>
-      <p class="instructions">Tap letters to find hidden words (in any order!). First tap starts the timer.</p>
-      
-      <!-- Player Info Bar -->
-      <div class="player-bar">
-        <span>Player: <strong id="player-display">Anonymous</strong></span>
-        <button class="change-name-btn" onclick="promptPlayerName()">Change Name</button>
-      </div>
+        <!-- Contenedor adaptado y responsivo para la sopa de letras -->
+        <div id="grid-container" class="grid-container"></div>
 
-      <!-- Timer & Stats -->
-      <div class="game-stats">
-        <span>⏱️ Time: <strong id="timer">00:00</strong></span>
-        <span>🎯 Found: <strong id="found-count">0</strong> / 5</span>
-      </div>
+        <div id="words-to-find-container">
+          <p><strong>Words to find:</strong></p>
+          <ul id="words-list">
+            <li data-word="LITTER">LITTER</li>
+            <li data-word="POLICY">POLICY</li>
+            <li data-word="WASTE">WASTE</li>
+            <li data-word="PLASTIC">PLASTIC</li>
+            <li data-word="DEBATE">DEBATE</li>
+          </ul>
+        </div>
 
-      <div id="grid-container" class="grid-container"></div>
-      
-      <div id="words-to-find-container">
-        <h3>Words to find:</h3>
-        <ul id="words-list">
-          <li data-word="LITTER">LITTER</li>
-          <li data-word="POLICY">POLICY</li>
-          <li data-word="WASTE">WASTE</li>
-          <li data-word="PLASTIC">PLASTIC</li>
-          <li data-word="DEBATE">DEBATE</li>
-        </ul>
-      </div>
+        <!-- Panel de Victoria / Resultado Sopa de Letras -->
+        <div id="ws-result" class="result-card hidden-section">
+          <h3>🎉 Excellent!</h3>
+          <p id="ws-final-time">You finished in: 0 seconds</p>
+          <p id="ws-score-msg"></p>
+          <button class="restart-btn" onclick="resetWordSearch()">Play Again</button>
+        </div>
+      </section>
 
-      <!-- Word Search Victory Modal -->
-      <div id="ws-result" class="result-card hidden-section">
-        <h3>🎉 Nailed it!</h3>
-        <p id="ws-final-time">You finished in: 0 seconds</p>
-        <p id="ws-score-msg"></p>
-        <button class="restart-btn" onclick="resetWordSearch()">Play Again</button>
-        <button class="restart-btn secondary-btn" onclick="showSection('leaderboard')">View Top 30</button>
-      </div>
-    </section>
+      <!-- SECCIÓN 3: LEADERBOARD -->
+      <section id="leaderboard-section" class="hidden-section">
+        <h2>Leaderboard (Top 30)</h2>
+        <p class="instructions">Fastest times completing the word search.</p>
 
-    <!-- SECTION 3: REAL-TIME LEADERBOARD -->
-    <section id="leaderboard" class="hidden-section">
-      <h2>Top 30 Word Search Leaderboard</h2>
-      <p class="instructions">Real-time rankings sorted by fastest completion time.</p>
-      
-      <div class="card">
         <table class="leaderboard-table">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Player</th>
+              <th>Rank</th>
+              <th>Name</th>
               <th>Time</th>
             </tr>
           </thead>
           <tbody id="leaderboard-body">
-            <tr>
-              <td colspan="3" style="text-align:center;">Loading scores...</td>
-            </tr>
+            <tr><td colspan="3" style="text-align:center;">Loading scores...</td></tr>
           </tbody>
         </table>
-      </div>
 
-      <!-- Botón protegido con contraseña -->
-      <div style="text-align: center; margin-top: 15px;">
-        <button onclick="resetLeaderboardWithPassword()" class="reset-lb-btn">Reset Leaderboard</button>
-      </div>
-    </section>
-
-  </main>
+        <button class="reset-lb-btn" onclick="resetLeaderboardWithPassword()">Reset Leaderboard</button>
+      </section>
+    </main>
+  </div>
 
   <footer>
     <p>English Class Project</p>
   </footer>
 
+  <!-- Archivo JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>

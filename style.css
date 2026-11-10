@@ -22,12 +22,12 @@ header {
 }
 
 header h1 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-bottom: 5px;
 }
 
 header p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   opacity: 0.9;
 }
 
@@ -36,7 +36,7 @@ nav {
   display: flex;
   justify-content: center;
   background-color: #1b5e20;
-  gap: 10px;
+  gap: 8px;
   padding: 10px;
   flex-wrap: wrap;
 }
@@ -45,10 +45,11 @@ nav {
   background: transparent;
   border: 2px solid white;
   color: white;
-  padding: 10px 18px;
+  padding: 8px 14px;
   border-radius: 20px;
   font-weight: bold;
   cursor: pointer;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
 }
 
@@ -61,13 +62,14 @@ nav {
 .container {
   flex: 1;
   max-width: 800px;
-  width: 95%;
-  margin: 20px auto;
+  width: 100%;
+  padding: 0 10px;
+  margin: 15px auto;
 }
 
 main > section {
   background: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
@@ -85,41 +87,45 @@ main > section.hidden-section {
 
 h2 {
   color: #2e7d32;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
 }
 
 .instructions {
   color: #666;
   font-style: italic;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
 }
 
 /* --- SECCIÓN 1: QUIZ --- */
 .quiz-card {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  padding: 15px;
-  margin-top: 15px;
+  padding: 12px;
+  margin-top: 12px;
   background-color: #fafafa;
 }
 
 .question {
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   color: #1b5e20;
+  font-size: 0.95rem;
 }
 
 .option-btn {
   display: block;
   width: 100%;
   text-align: left;
-  padding: 12px;
-  margin-bottom: 8px;
+  padding: 10px;
+  margin-bottom: 6px;
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 0.9rem;
   transition: background-color 0.2s ease, border-color 0.2s ease;
-  font-size: 0.95rem;
 }
 
 .option-btn:hover:not(:disabled) {
@@ -134,8 +140,8 @@ h2 {
 
 /* PANEL DE RESULTADOS */
 .result-card {
-  margin-top: 25px;
-  padding: 20px;
+  margin-top: 20px;
+  padding: 15px;
   background-color: #e8f5e9;
   border: 2px solid #2e7d32;
   border-radius: 8px;
@@ -154,47 +160,51 @@ h2 {
   background-color: #2e7d32;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 12px;
+  font-size: 0.9rem;
 }
 
 .restart-btn:hover {
   opacity: 0.9;
 }
 
-/* --- SECCIÓN 2: SOPA DE LETRAS (ADAPTADA A MÓVILES) --- */
+/* --- SECCIÓN 2: SOPA DE LETRAS (RESPONSIVA Y SIN ZOOM EXCESIVO) --- */
 .player-bar, .game-stats {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 15px 0;
+  margin: 12px 0;
   background-color: #f0f4f1;
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 6px;
+  font-size: 0.9rem;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .change-name-btn {
   background-color: #2e7d32;
   color: white;
   border: none;
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 0.85rem;
 }
 
-/* Cuadrícula responsiva que se adapta automáticamente a pantallas de celulares */
+/* Cuadrícula adaptada para móviles con desplazamiento lateral seguro si hace falta */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(10, minmax(28px, 1fr));
+  grid-template-columns: repeat(10, minmax(28px, 36px));
   gap: 3px;
   justify-content: center;
-  margin: 20px auto;
+  margin: 15px auto;
   max-width: 100%;
+  overflow-x: auto;
 }
 
 .grid-cell {
@@ -230,7 +240,7 @@ h2 {
 }
 
 #words-to-find-container {
-  margin-top: 20px;
+  margin-top: 15px;
   text-align: center;
 }
 
@@ -238,17 +248,17 @@ h2 {
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 6px;
+  margin-top: 8px;
   justify-content: center;
 }
 
 #words-list li {
   background-color: #e0e0e0;
-  padding: 5px 12px;
-  border-radius: 15px;
+  padding: 4px 10px;
+  border-radius: 12px;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 #words-list li.found {
@@ -261,14 +271,14 @@ h2 {
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
+  margin-top: 12px;
 }
 
 .leaderboard-table th, .leaderboard-table td {
-  padding: 10px;
+  padding: 8px;
   border-bottom: 1px solid #ddd;
   text-align: left;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .leaderboard-table th {
@@ -284,13 +294,14 @@ h2 {
   border-radius: 4px;
   cursor: pointer;
   margin-top: 15px;
+  font-size: 0.9rem;
 }
 
 footer {
   text-align: center;
-  padding: 15px;
+  padding: 12px;
   background-color: #e0e0e0;
-  margin-top: 30px;
+  margin-top: 20px;
   color: #666;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
